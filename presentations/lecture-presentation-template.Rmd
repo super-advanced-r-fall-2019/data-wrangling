@@ -4,8 +4,8 @@ subtitle: "FSH 507 Fall 2019"
 author: "Your Name"
 date: " `r Sys.Date()`"
 output:
-  powerpoint_presentation: default
   ioslides_presentation: default
+  powerpoint_presentation: default
   html_document: default
   slidy_presentation: default
 ---
@@ -46,5 +46,35 @@ plot(pressure)
 
 # Materials
 
+## stuff
 
+Tyler Clavelle and I wrote a data-wrangling intro several years ago so it might be a bit out of date, but you can take whatever you want from it
 
+https://github.com/tclavelle/dplyr-tidyr-tutorial/blob/master/dplyr-tidyr-tutorial.Rmd
+
+## Key things IMO:
+
+* what is tidy data?
+
+* key verbs and things
+  - piping! 
+  - select
+  - filter
+  - joins (left_, right_, full_)
+  - group_by
+  - mutate
+  - summarise
+  - gather
+  - spread
+  
+## More things in the `tidyverse`
+
+strings with `stringr`
+
+dates with `lubridate`
+
+factors with `forcats`
+  
+## ideas for exercise
+  - tidy the FAO data (I've put it in the data folder)
+  - For bonus, join it to the gapminder dataset (library(gapminder)), has development metrics by country and year
