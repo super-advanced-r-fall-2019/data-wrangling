@@ -74,6 +74,8 @@ strings with `stringr`
 dates with `lubridate`
 
 factors with `forcats`
+
+It's outside the tidyverse, but if there's time at the end might be good to mention `data.table`, very fast alternative to `dplyr` for large data
   
 ## ideas for exercise
   - tidy the FAO data (I've put it in the data folder)
