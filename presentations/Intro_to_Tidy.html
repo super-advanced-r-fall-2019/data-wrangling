@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Intro to the tidyverse</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Caitlin Allen Akselrud" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Intro to the tidyverse
+## FSH 507 Fall 2019
+### Caitlin Allen Akselrud
+### SAFS, UW
+### Sept. 30, 2019
+
+---
+
+class: inverse, center, middle
+
+
+
+# What is the tidyverse?
+
+## a set of opinionated packages designed to work together to streamline data manipulation and visualization
+
+---
+class: inverse, left, top
+
+
+class: inverse, left, top
+# What is tidy data?
+
+
+1. Each variable must have its own column.
+
+2. Each observation must have its own row.
+
+3. Each value must have its own cell.
+
+* tidyverse packages are generally designed around this idea
+---
+
+# What is tidy data?
+
+![](../imgs/tidy-1.png)
+
+
+---
+
+# Tidy?
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 1992 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 1997 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2002 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2007 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16317921 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22227415 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25268405 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31889923 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Albania &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3326498 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3428038 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3508512 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3600523 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Algeria &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26298373 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29072015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31287142 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33333216 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Angola &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8735988 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9875024 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10866106 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12420476 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Argentina &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33958947 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36203463 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38331121 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40301927 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Australia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17481977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18565243 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19546792 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20434176 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# Tidy!
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pop &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16317921 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22227415 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25268405 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2007 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31889923 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Albania &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3326498 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Albania &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3428038 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# What is it you want to do?
+
+Rotate your data from rows to columns?
+
+  - Use `tidyr`!
+  
+Comupte a value from two columns?
+
+  - Use the `mutate` function from `dplyr`!
+
+Filter specific values?
+
+  - Use `filter` in `dplyr`!
+  
+Fix date and time stamps? Adjust for time zone?
+
+  - Use `lubridate`!
+
+
+---
+class: inverse, center, middle
+
+# Look at the R Studio Cheat Sheets: 
+
+&lt;span style="font-size:1.5em;"&gt;
+https://www.rstudio.com/resources/cheatsheets/
+
+
+# And the tidyverse website:
+
+&lt;span style="font-size:1.5em;"&gt;
+https://www.tidyverse.org/
+
+---
+class: inverse, left, top
+
+# Install packages if needed
+
+
+
+Load packages
+
+```r
+library(devtools) 
+library(tidyverse)
+library(tibble)
+library(knitr)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+library(broom)
+library(gapminder)
+```
+
+---
+class: inverse, left, top
+# The Tidyverse
+
+- The tibble
+
+  - a 'tibble' is a data frame, but cleaner
+
+- read_...
+
+  - read in data as a tibble
+
+- tidyr
+
+  - reshape your data: pivot longer- rows to columns, pivot wider- columns to rows, nest and unnest, expand grid
+
+- dplyr
+
+  - data manipulation: select, filter, summarise, arrange
+
+  - mutate (add a new variable as a function of existing variables)
+
+- the pipe (`%&gt;%`): connect your data manipulations together
+  - Part of the `magrittr` package
+
+---
+class: inverse, left, top
+# The Tidyverse
+
+- stringr
+
+  - working with character strings: detect matches, subset strings, manage string length, mutate strings, join and split strings, order strings
+
+- lubridate 
+
+  - deal with times and dates
+
+  - date-times, time zones, periods (years/months/weeks/etc.), durations, intervals
+  
+- broom
+
+  - tidy results of R statistical packages 
+
+- ggplot (NEXT WEEK!)
+
+---
+class: inverse, left, top
+# The Tibble
+
+Take a look at the Gapminder dataset.
+
+
+```r
+gapminder
+```
+
+```
+## # A tibble: 1,704 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# The Tibble
+
+`str` shows you all the headers of the Gapminder dataset.
+
+
+```r
+str(gapminder)
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...
+```
+
+---
+class: inverse, left, top
+# Read in data tidily
+
+Use the read_... function 
+
+- Comma delimited: `read_csv("filename.csv")`
+
+- Semi-colon, delimited:`read_csv2("filename.csv")`
+
+- Spcifiy delimiter: `read_delim("filename.txt", delim=" ")`
+
+- Fixed width: `read_fwf("filename.fwf, col_positions= c(1,3,5)")`
+
+- Tab delimited: `read_tsv("filename.tsv")`
+
+- Generic table: `read_table()`
+
+Take a look at the "Data Import Cheat Sheet"
+
+---
+class: inverse, left, top
+# Exercise 1: Read in a dataset
+
+&lt;span style="font-size:1.5em;"&gt;
+Use your own dataset, or load the iris dataset using `data(iris)`
+
+Look at your data set- is it a tibble?
+
+---
+class: inverse, left, top
+## Make a data set into a tibble
+
+
+```r
+iris[1:4,]
+```
+
+```
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+```
+
+```r
+as_tibble(iris)
+```
+
+```
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows
+```
+
+---
+class: inverse, left, top
+# Tidyr: Reshape your data
+
+Example, unite several columns into one: 
+
+```r
+unite(gapminder,
+      col = "Location",
+      continent:country,
+      sep = ", ",
+      remove = TRUE)
+```
+
+```
+## # A tibble: 1,704 x 5
+##    Location           year lifeExp      pop gdpPercap
+##    &lt;chr&gt;             &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Asia, Afghanistan  1952    28.8  8425333      779.
+##  2 Asia, Afghanistan  1957    30.3  9240934      821.
+##  3 Asia, Afghanistan  1962    32.0 10267083      853.
+##  4 Asia, Afghanistan  1967    34.0 11537966      836.
+##  5 Asia, Afghanistan  1972    36.1 13079460      740.
+##  6 Asia, Afghanistan  1977    38.4 14880372      786.
+##  7 Asia, Afghanistan  1982    39.9 12881816      978.
+##  8 Asia, Afghanistan  1987    40.8 13867957      852.
+##  9 Asia, Afghanistan  1992    41.7 16317921      649.
+## 10 Asia, Afghanistan  1997    41.8 22227415      635.
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# Tidyr: Reshape your data 
+
+You can also:
+
+- `pivot_longer` gather columns into rows
+
+- `pivot_wider` separate one column into several
+
+- `nest` and `unnest` your data set
+
+- `expand_grid` as an updated version of `expand.grid`
+  - `stringsAsFactors = FALSE`!
+
+*New release of tidyr functions!
+https://www.tidyverse.org/articles/2019/09/tidyr-1-0-0/
+
+---
+
+
+
+class: inverse, left, top
+# Dplyr: Data manipulation
+
+- Subset observations (rows)
+
+- Subset variables (columns)
+
+- Order rows by value
+
+- Rename variables
+
+- Summary functions on data
+
+- Make new variables, apply functions to data
+
+- Group data
+
+- Join data sets
+
+---
+class: inverse, left, top
+# Dplyr: Data manipulation
+
+Example: filter by life expectancy:
+
+```r
+filter(gapminder, lifeExp &gt;80)
+```
+
+```
+## # A tibble: 21 x 6
+##    country          continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;            &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Australia        Oceania    2002    80.4 19546792    30688.
+##  2 Australia        Oceania    2007    81.2 20434176    34435.
+##  3 Canada           Americas   2007    80.7 33390141    36319.
+##  4 France           Europe     2007    80.7 61083916    30470.
+##  5 Hong Kong, China Asia       2002    81.5  6762476    30209.
+##  6 Hong Kong, China Asia       2007    82.2  6980412    39725.
+##  7 Iceland          Europe     2002    80.5   288030    31163.
+##  8 Iceland          Europe     2007    81.8   301931    36181.
+##  9 Israel           Asia       2007    80.7  6426679    25523.
+## 10 Italy            Europe     2002    80.2 57926999    27968.
+## # … with 11 more rows
+```
+
+---
+class: inverse, left, top
+# Dplyr: Data manipulation
+
+Example: select certain columns:
+
+```r
+select(gapminder, country, year, gdpPercap)
+```
+
+```
+## # A tibble: 1,704 x 3
+##    country      year gdpPercap
+##    &lt;fct&gt;       &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan  1952      779.
+##  2 Afghanistan  1957      821.
+##  3 Afghanistan  1962      853.
+##  4 Afghanistan  1967      836.
+##  5 Afghanistan  1972      740.
+##  6 Afghanistan  1977      786.
+##  7 Afghanistan  1982      978.
+##  8 Afghanistan  1987      852.
+##  9 Afghanistan  1992      649.
+## 10 Afghanistan  1997      635.
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# Dplyr: Data manipulation
+The mutate function is very useful- it can do computations, and adds a new column.
+
+Example: mutate- multiply life expectancy by GDP:
+
+```r
+mutate(gapminder, l_g=lifeExp*gdpPercap)
+```
+
+```
+## # A tibble: 1,704 x 7
+##    country     continent  year lifeExp      pop gdpPercap    l_g
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779. 22449.
+##  2 Afghanistan Asia       1957    30.3  9240934      821. 24898.
+##  3 Afghanistan Asia       1962    32.0 10267083      853. 27297.
+##  4 Afghanistan Asia       1967    34.0 11537966      836. 28447.
+##  5 Afghanistan Asia       1972    36.1 13079460      740. 26704.
+##  6 Afghanistan Asia       1977    38.4 14880372      786. 30217.
+##  7 Afghanistan Asia       1982    39.9 12881816      978. 38978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852. 34797.
+##  9 Afghanistan Asia       1992    41.7 16317921      649. 27061.
+## 10 Afghanistan Asia       1997    41.8 22227415      635. 26534.
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# Dplyr: Data manipulation
+
+Example: group data and summarise by group:
+
+```r
+x &lt;- group_by(gapminder, country)
+summarise(x, avg = mean(lifeExp))
+```
+
+```
+## # A tibble: 142 x 2
+##    country       avg
+##    &lt;fct&gt;       &lt;dbl&gt;
+##  1 Afghanistan  37.5
+##  2 Albania      68.4
+##  3 Algeria      59.0
+##  4 Angola       37.9
+##  5 Argentina    69.1
+##  6 Australia    74.7
+##  7 Austria      73.1
+##  8 Bahrain      65.6
+##  9 Bangladesh   49.8
+## 10 Belgium      73.6
+## # … with 132 more rows
+```
+
+---
+class: inverse, left, top
+# The Pipe: %&gt;% 
+All this means is: do task one, and then do task two.
+
+Example: group data and summarise:
+
+```r
+group_by(gapminder, country) %&gt;% 
+  summarise(avg = mean(lifeExp))
+```
+
+```
+## # A tibble: 142 x 2
+##    country       avg
+##    &lt;fct&gt;       &lt;dbl&gt;
+##  1 Afghanistan  37.5
+##  2 Albania      68.4
+##  3 Algeria      59.0
+##  4 Angola       37.9
+##  5 Argentina    69.1
+##  6 Australia    74.7
+##  7 Austria      73.1
+##  8 Bahrain      65.6
+##  9 Bangladesh   49.8
+## 10 Belgium      73.6
+## # … with 132 more rows
+```
+
+---
+class: inverse, left, top
+## The Pipe: %&gt;% 
+
+Example: group data, summarise, and filter:
+
+```r
+group_by(gapminder, country, continent) %&gt;% 
+  summarise(avg_LifeExp = mean(lifeExp)) %&gt;%
+  filter(continent ==  'Africa')
+```
+
+```
+## # A tibble: 52 x 3
+## # Groups:   country [52]
+##    country                  continent avg_LifeExp
+##    &lt;fct&gt;                    &lt;fct&gt;           &lt;dbl&gt;
+##  1 Algeria                  Africa           59.0
+##  2 Angola                   Africa           37.9
+##  3 Benin                    Africa           48.8
+##  4 Botswana                 Africa           54.6
+##  5 Burkina Faso             Africa           44.7
+##  6 Burundi                  Africa           44.8
+##  7 Cameroon                 Africa           48.1
+##  8 Central African Republic Africa           43.9
+##  9 Chad                     Africa           46.8
+## 10 Comoros                  Africa           52.4
+## # … with 42 more rows
+```
+
+*Notice your tibble only has to be in the first function
+
+---
+class: inverse, left, top
+# The Pipe: %&gt;% 
+
+
+![](../imgs/pipes.png)
+
+
+---
+class: inverse, left, top
+# Exercise 2: data manipulation 
+
+Use the gapminder dataset to find the median GDP per capita of Europe by year. 
+
+
+```
+## # A tibble: 12 x 3
+## # Groups:   continent [1]
+##    continent  year medianGDP
+##    &lt;fct&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Europe     1952     5142.
+##  2 Europe     1957     6067.
+##  3 Europe     1962     7516.
+##  4 Europe     1967     9366.
+##  5 Europe     1972    12326.
+##  6 Europe     1977    14226.
+##  7 Europe     1982    15323.
+##  8 Europe     1987    16215.
+##  9 Europe     1992    17550.
+## 10 Europe     1997    19596.
+## 11 Europe     2002    23675.
+## 12 Europe     2007    28054.
+```
+
+---
+
+# Putting things together 
+## `pivot_` functions
+
+
+* You often get data in "wide" (untidy) format
+  * `pivot_longer` to make it "tidy"
+
+
+* Sometimes you want things wider (subtraction, plotting)
+  * `pivot_wider` spreads rows into columns
+
+---
+
+# `pivot_longer`
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; continent &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; lifeExp &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pop &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; gdpPercap &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1952 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.801 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8425333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 779.4453 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1957 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.332 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9240934 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 820.8530 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1962 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10267083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 853.1007 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1967 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34.020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11537966 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 836.1971 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1972 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.088 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13079460 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 739.9811 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38.438 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14880372 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 786.1134 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# `pivot_longer`
+
+
+```r
+longer_gapminder &lt;-
+  tidyr::pivot_longer(
+    gapminder,
+    cols = c("pop", "lifeExp", "gdpPercap"),
+    names_to = "metric",
+    values_to = "value"
+  )
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; continent &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; metric &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1952 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; pop &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8425333.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1952 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; lifeExp &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.8010 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1952 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; gdpPercap &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 779.4453 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1957 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; pop &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9240934.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1957 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; lifeExp &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.3320 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1957 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; gdpPercap &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 820.8530 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# `pivot_longer`
+
+
+```r
+longer_gapminder %&gt;% 
+  group_by(country, metric) %&gt;% 
+  summarise(mean_value = mean(value),
+            sd_value = sd(value)) %&gt;% 
+  head(n = 10)
+```
+
+```
+## # A tibble: 10 x 4
+## # Groups:   country [4]
+##    country     metric    mean_value   sd_value
+##    &lt;fct&gt;       &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Afghanistan gdpPercap      803.      108.  
+##  2 Afghanistan lifeExp         37.5       5.10
+##  3 Afghanistan pop       15823715.  7114583.  
+##  4 Albania     gdpPercap     3255.     1192.  
+##  5 Albania     lifeExp         68.4       6.32
+##  6 Albania     pop        2580249.   828586.  
+##  7 Algeria     gdpPercap     4426.     1310.  
+##  8 Algeria     lifeExp         59.0      10.3 
+##  9 Algeria     pop       19875406.  8613355.  
+## 10 Angola      gdpPercap     3607.     1166.
+```
+
+
+---
+
+# `pivot_wider`
+
+
+```r
+wider_gapminder &lt;- pivot_wider(longer_gapminder,names_from = metric,
+                               values_from = value)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; continent &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pop &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; lifeExp &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; gdpPercap &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1952 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8425333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.801 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 779.4453 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1957 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9240934 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.332 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 820.8530 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1962 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10267083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 853.1007 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1967 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11537966 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34.020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 836.1971 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1972 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13079460 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.088 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 739.9811 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14880372 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38.438 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 786.1134 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# `pivot_wider`
+
+
+```r
+plot(wider_gapminder$gdpPercap, wider_gapminder$lifeExp)
+```
+
+![](Intro_to_Tidy_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+---
+
+---
+class: inverse, left, top
+# Dplyr: Data manipulation- the join functions
+
+&lt;span style="font-size:1.5em;"&gt;
+Hint: data transformations cheat sheet is your friend!
+
+- left_join: take data set 1, and join matching values from data set 2
+
+- right_join: take data set 2, and join matching values from data set 1
+
+- inner_join: join rows with matching values
+
+- full_join: join all columns and rows
+
+---
+class: inverse, left, top
+# Stringr
+## Dealing with characters
+
+- Detect matches
+
+- Subset strings
+
+- Manage string length
+
+- Mutate strings
+
+- Join and split strings
+
+- Order strings
+
+---
+class: inverse, left, top
+# Stringr
+## Dealing with characters
+
+
+```r
+mutate(gapminder, "string" = str_c(country, continent, sep= ", "))
+```
+
+```
+## # A tibble: 1,704 x 7
+##    country     continent  year lifeExp      pop gdpPercap string           
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;            
+##  1 Afghanistan Asia       1952    28.8  8425333      779. Afghanistan, Asia
+##  2 Afghanistan Asia       1957    30.3  9240934      821. Afghanistan, Asia
+##  3 Afghanistan Asia       1962    32.0 10267083      853. Afghanistan, Asia
+##  4 Afghanistan Asia       1967    34.0 11537966      836. Afghanistan, Asia
+##  5 Afghanistan Asia       1972    36.1 13079460      740. Afghanistan, Asia
+##  6 Afghanistan Asia       1977    38.4 14880372      786. Afghanistan, Asia
+##  7 Afghanistan Asia       1982    39.9 12881816      978. Afghanistan, Asia
+##  8 Afghanistan Asia       1987    40.8 13867957      852. Afghanistan, Asia
+##  9 Afghanistan Asia       1992    41.7 16317921      649. Afghanistan, Asia
+## 10 Afghanistan Asia       1997    41.8 22227415      635. Afghanistan, Asia
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# Lubridate
+## Dealing with time
+
+This is for all your time problems in raw data!
+
+- time formatting
+
+- extracting components of time stamps
+
+- rounding dates/times
+
+- dealing with time zones
+
+- time math: periods, durations, intervals
+
+---
+class: inverse, left, top
+# Lubridate
+## Dealing with time
+
+
+```r
+mutate(gapminder, leap= leap_year(year))
+```
+
+```
+## # A tibble: 1,704 x 7
+##    country     continent  year lifeExp      pop gdpPercap leap 
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779. TRUE 
+##  2 Afghanistan Asia       1957    30.3  9240934      821. FALSE
+##  3 Afghanistan Asia       1962    32.0 10267083      853. FALSE
+##  4 Afghanistan Asia       1967    34.0 11537966      836. FALSE
+##  5 Afghanistan Asia       1972    36.1 13079460      740. TRUE 
+##  6 Afghanistan Asia       1977    38.4 14880372      786. FALSE
+##  7 Afghanistan Asia       1982    39.9 12881816      978. FALSE
+##  8 Afghanistan Asia       1987    40.8 13867957      852. FALSE
+##  9 Afghanistan Asia       1992    41.7 16317921      649. TRUE 
+## 10 Afghanistan Asia       1997    41.8 22227415      635. FALSE
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# Lubridate
+## Dealing with time
+
+
+```r
+mutate(gapminder, time=years(year))
+```
+
+```
+## # A tibble: 1,704 x 7
+##    country   continent  year lifeExp     pop gdpPercap time                
+##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;Period&gt;            
+##  1 Afghanis… Asia       1952    28.8  8.43e6      779. 1952y 0m 0d 0H 0M 0S
+##  2 Afghanis… Asia       1957    30.3  9.24e6      821. 1957y 0m 0d 0H 0M 0S
+##  3 Afghanis… Asia       1962    32.0  1.03e7      853. 1962y 0m 0d 0H 0M 0S
+##  4 Afghanis… Asia       1967    34.0  1.15e7      836. 1967y 0m 0d 0H 0M 0S
+##  5 Afghanis… Asia       1972    36.1  1.31e7      740. 1972y 0m 0d 0H 0M 0S
+##  6 Afghanis… Asia       1977    38.4  1.49e7      786. 1977y 0m 0d 0H 0M 0S
+##  7 Afghanis… Asia       1982    39.9  1.29e7      978. 1982y 0m 0d 0H 0M 0S
+##  8 Afghanis… Asia       1987    40.8  1.39e7      852. 1987y 0m 0d 0H 0M 0S
+##  9 Afghanis… Asia       1992    41.7  1.63e7      649. 1992y 0m 0d 0H 0M 0S
+## 10 Afghanis… Asia       1997    41.8  2.22e7      635. 1997y 0m 0d 0H 0M 0S
+## # … with 1,694 more rows
+```
+
+---
+class: inverse, left, top
+# Lubridate
+## Dealing with time
+
+
+```r
+mutate(economics, year=year(date))
+```
+
+```
+## # A tibble: 574 x 7
+##    date         pce    pop psavert uempmed unemploy  year
+##    &lt;date&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+##  1 1967-07-01  507. 198712    12.6     4.5     2944  1967
+##  2 1967-08-01  510. 198911    12.6     4.7     2945  1967
+##  3 1967-09-01  516. 199113    11.9     4.6     2958  1967
+##  4 1967-10-01  512. 199311    12.9     4.9     3143  1967
+##  5 1967-11-01  517. 199498    12.8     4.7     3066  1967
+##  6 1967-12-01  525. 199657    11.8     4.8     3018  1967
+##  7 1968-01-01  531. 199808    11.7     5.1     2878  1968
+##  8 1968-02-01  534. 199920    12.3     4.5     3001  1968
+##  9 1968-03-01  544. 200056    11.7     4.1     2877  1968
+## 10 1968-04-01  544  200208    12.3     4.6     2709  1968
+## # … with 564 more rows
+```
+
+---
+class: inverse, left, top
+# Broom: Tidy stat results
+
+
+```r
+fit &lt;- lm(lifeExp ~ gdpPercap + pop, gapminder)
+summary(fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = lifeExp ~ gdpPercap + pop, data = gapminder)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -82.754  -7.745   2.055   8.212  18.534 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 5.365e+01  3.225e-01  166.36  &lt; 2e-16 ***
+## gdpPercap   7.676e-04  2.568e-05   29.89  &lt; 2e-16 ***
+## pop         9.728e-09  2.385e-09    4.08 4.72e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 10.44 on 1701 degrees of freedom
+## Multiple R-squared:  0.3471,	Adjusted R-squared:  0.3463 
+## F-statistic: 452.2 on 2 and 1701 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+class: inverse, left, top
+# Broom: Tidy stat results
+
+
+```r
+tidy(fit)
+```
+
+```
+## # A tibble: 3 x 5
+##   term        estimate     std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)  5.36e+1 0.322            166.   0.       
+## 2 gdpPercap    7.68e-4 0.0000257         29.9  4.04e-158
+## 3 pop          9.73e-9 0.00000000238      4.08 4.72e-  5
+```
+
+---
+class: inverse, left, top
+# Broom: Tidy stat results
+
+`augment` add stidy stats to the original data
+
+
+```r
+augment(fit)
+```
+
+```
+## # A tibble: 1,704 x 10
+##    lifeExp gdpPercap    pop .fitted .se.fit .resid    .hat .sigma .cooksd
+##      &lt;dbl&gt;     &lt;dbl&gt;  &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1    28.8      779. 8.43e6    54.3   0.307  -25.5 8.65e-4   10.4 1.72e-3
+##  2    30.3      821. 9.24e6    54.4   0.306  -24.0 8.59e-4   10.4 1.52e-3
+##  3    32.0      853. 1.03e7    54.4   0.305  -22.4 8.55e-4   10.4 1.31e-3
+##  4    34.0      836. 1.15e7    54.4   0.305  -20.4 8.53e-4   10.4 1.09e-3
+##  5    36.1      740. 1.31e7    54.3   0.306  -18.3 8.58e-4   10.4 8.75e-4
+##  6    38.4      786. 1.49e7    54.4   0.305  -16.0 8.51e-4   10.4 6.63e-4
+##  7    39.9      978. 1.29e7    54.5   0.303  -14.7 8.40e-4   10.4 5.53e-4
+##  8    40.8      852. 1.39e7    54.4   0.304  -13.6 8.47e-4   10.4 4.81e-4
+##  9    41.7      649. 1.63e7    54.3   0.306  -12.6 8.59e-4   10.4 4.20e-4
+## 10    41.8      635. 2.22e7    54.4   0.305  -12.6 8.53e-4   10.4 4.14e-4
+## # … with 1,694 more rows, and 1 more variable: .std.resid &lt;dbl&gt;
+```
+
+---
+class: inverse, left, top
+# Additional Resources
+
+Tyler and Dan's dplyr-tidyr tutorial:
+(https://github.com/tclavelle/dplyr-tidyr-tutorial/blob/master/dplyr-tidyr-tutorial.Rmd)
+
+- [Data wrangling cheatsheet (`dplyr`,`tidyr`)](http://ucsb-bren.github.io/refs/cheatsheets/data-wrangling-cheatsheet.pdf)
+- [Data wrangling with R and RStudio](https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/)
+- [slides](http://ucsb-bren.github.io/env-info/wk03_dplyr/wrangling-webinar.pdf)
+- [dplyr vignette: Introduction to dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+- [Two-table verbs](https://cran.rstudio.com/web/packages/dplyr/vignettes/two-table.html)
+- [Window functions and grouped mutate/filter](https://cran.rstudio.com/web/packages/dplyr/vignettes/window-functions.html)
+- [Databases](https://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html)
+- [Non-standard evaluation](https://cran.rstudio.com/web/packages/dplyr/vignettes/nse.html)
+- [tidyr vignette: Tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
+- [Introduction to dplyr for Faster Data Manipulation in R](https://rpubs.com/justmarkham/dplyr-tutorial)
+- [Environmental Informatics | ucsb-bren/env-info](http://ucsb-bren.github.io/env-info/)
+- bigrquery tutorials:
+- [A new data processing workflow for R: dplyr, magrittr, tidyr, ggplot2 | Technical Tidbits From Spatial Analysis &amp; Data Science](http://zevross.com/blog/2015/01/13/a-new-data-processing-workflow-for-r-dplyr-magrittr-tidyr-ggplot2/) (newer)
+- [Fetching BigQuery Data](http://dtkaplan.github.io/CVC/Data/Birthdays/Birthdays.html)
+
+---
+class: inverse, left, top
+# Class Exercise:
+
+1) Tidy the FAO Database
+
+2) Add the FAO Database to the Gapminder Database
+
+OR: Start with your own raw data and tidy it!
+
+---  
+
+We will share the tidy functions we've explored in about an hour.
+
+---
+class: inverse
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
