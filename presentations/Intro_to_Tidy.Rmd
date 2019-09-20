@@ -17,14 +17,68 @@ class: inverse, center, middle
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(gapminder)
 ```
 
 # What is the tidyverse?
 
-## a set of packages designed to streamline data manipulation and visualization
+## a set of opinionated packages designed to work together to streamline data manipulation and visualization
 
 ---
 class: inverse, left, top
+
+
+class: inverse, left, top
+# What is tidy data?
+
+
+1. Each variable must have its own column.
+
+2. Each observation must have its own row.
+
+3. Each value must have its own cell.
+
+* tidyverse packages are generally designed around this idea
+---
+
+# What is tidy data?
+
+![](../imgs/tidy-1.png)
+
+
+---
+
+# Tidy?
+
+
+```{r, echo = FALSE}
+(gapminder) %>%
+  select(country, year, pop) %>%
+  filter(year> 1990) %>%
+  pivot_wider(names_from = year,
+              values_from = pop) %>%
+  head() %>% 
+  knitr::kable(format = "html")
+
+```
+
+
+---
+
+# Tidy!
+
+```{r, echo = FALSE}
+(gapminder) %>%
+  select(country, year, pop) %>%
+  filter(year> 1990) %>%
+  head() %>% 
+  knitr::kable(format = "html")
+
+```
+
+
+---
 
 # What is it you want to do?
 
@@ -113,7 +167,8 @@ class: inverse, left, top
 
   - mutate (add a new variable as a function of existing variables)
 
-- the pipe: connect your data manipulations together
+- the pipe (`%>%`): connect your data manipulations together
+  - Part of the `magrittr` package
 
 ---
 class: inverse, left, top
@@ -180,12 +235,8 @@ class: inverse, left, top
 # Exercise 1: Read in a dataset
 
 <span style="font-size:1.5em;">
-Use your own dataset, or download the Iris dataset from:
+Use your own dataset, or load the iris dataset using `data(iris)`
 
-<span style="font-size:1.5em;">
-https://gist.github.com/curran/a08a1080b88344b0c8a7
-
-<span style="font-size:1.5em;">
 Look at your data set- is it a tibble?
 
 ---
@@ -204,7 +255,12 @@ class: inverse, left, top
 Example, unite several columns into one: 
 ```{r, echo=TRUE}
 
-unite(gapminder, "Location", continent:country, sep = ", ", remove = TRUE)
+unite(gapminder,
+      col = "Location",
+      continent:country,
+      sep = ", ",
+      remove = TRUE)
+
 ```
 
 ---
@@ -213,20 +269,22 @@ class: inverse, left, top
 
 You can also:
 
-- `gather` gather columns into rows
+- `pivot_longer` gather columns into rows
 
-- `separate` separate one column into several
-
-- `pivot` spread rows into columns and vice versa
+- `pivot_wider` separate one column into several
 
 - `nest` and `unnest` your data set
 
 - `expand_grid` as an updated version of `expand.grid`
+  - `stringsAsFactors = FALSE`!
 
 *New release of tidyr functions!
 https://www.tidyverse.org/articles/2019/09/tidyr-1-0-0/
 
 ---
+
+
+
 class: inverse, left, top
 # Dplyr: Data manipulation
 
@@ -317,7 +375,10 @@ group_by(gapminder, country, continent) %>%
 ---
 class: inverse, left, top
 # The Pipe: %>% 
-https://twitter.com/andrewheiss/status/1173743447171354624/photo/1
+
+
+![](../imgs/pipes.png)
+
 
 ---
 class: inverse, left, top
@@ -330,6 +391,96 @@ group_by(gapminder, continent, year) %>%
   filter(continent == 'Europe') %>% 
   summarise(medianGDP= median(gdpPercap))
 ```
+
+---
+
+# Putting things together 
+## `pivot_` functions
+
+
+* You often get data in "wide" (untidy) format
+  * `pivot_longer` to make it "tidy"
+
+
+* Sometimes you want things wider (subtraction, plotting)
+  * `pivot_wider` spreads rows into columns
+
+---
+
+# `pivot_longer`
+
+```{r, echo=FALSE}
+
+knitr::kable(head(gapminder), format= "html")
+
+```
+
+---
+
+# `pivot_longer`
+
+```{r, echo=TRUE}
+
+longer_gapminder <-
+  tidyr::pivot_longer(
+    gapminder,
+    cols = c("pop", "lifeExp", "gdpPercap"),
+    names_to = "metric",
+    values_to = "value"
+  )
+
+```
+
+```{r, echo=FALSE}
+
+knitr::kable(head(longer_gapminder), format = "html")
+
+```
+
+
+---
+
+# `pivot_longer`
+
+```{r echo=TRUE}
+
+longer_gapminder %>% 
+  group_by(country, metric) %>% 
+  summarise(mean_value = mean(value),
+            sd_value = sd(value)) %>% 
+  head(n = 10)
+
+```
+
+
+---
+
+# `pivot_wider`
+
+```{r, echo=TRUE}
+
+wider_gapminder <- pivot_wider(longer_gapminder,names_from = metric,
+                               values_from = value)
+
+```
+
+```{r}
+
+knitr::kable(head(wider_gapminder), format = "html")
+
+```
+
+---
+
+# `pivot_wider`
+
+```{r, echo=TRUE, fig.height=4}
+
+plot(wider_gapminder$gdpPercap, wider_gapminder$lifeExp)
+
+```
+
+---
 
 ---
 class: inverse, left, top
