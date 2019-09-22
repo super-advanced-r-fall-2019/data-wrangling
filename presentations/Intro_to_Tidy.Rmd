@@ -23,15 +23,12 @@ library(gapminder)
 
 # What is the tidyverse?
 
-## a set of opinionated packages designed to work together to streamline data manipulation and visualization
+## a set of packages designed to work together to streamline data manipulation and visualization
 
 ---
 class: inverse, left, top
 
-
-class: inverse, left, top
 # What is tidy data?
-
 
 1. Each variable must have its own column.
 
@@ -39,47 +36,12 @@ class: inverse, left, top
 
 3. Each value must have its own cell.
 
-* tidyverse packages are generally designed around this idea
----
 
-# What is tidy data?
-
-![](../imgs/tidy-1.png)
+tidyverse packages are generally designed around this idea
 
 
 ---
-
-# Tidy?
-
-
-```{r, echo = FALSE}
-(gapminder) %>%
-  select(country, year, pop) %>%
-  filter(year> 1990) %>%
-  pivot_wider(names_from = year,
-              values_from = pop) %>%
-  head() %>% 
-  knitr::kable(format = "html")
-
-```
-
-
----
-
-# Tidy!
-
-```{r, echo = FALSE}
-(gapminder) %>%
-  select(country, year, pop) %>%
-  filter(year> 1990) %>%
-  head() %>% 
-  knitr::kable(format = "html")
-
-```
-
-
----
-
+class: inverse, left, top
 # What is it you want to do?
 
 Rotate your data from rows to columns?
@@ -128,6 +90,7 @@ class: inverse, left, top
 # install.packages('stringr')
 # install.packages('lubridate')
 # install.packages('gapminder')
+# install.packages('rlang')
 ```
 
 Load packages
@@ -143,6 +106,7 @@ library(stringr)
 library(lubridate)
 library(broom)
 library(gapminder)
+library(rlang)
 ```
 
 ---
@@ -211,6 +175,36 @@ str(gapminder)
 ```
 
 ---
+class: left, top
+# Tidy?
+
+
+```{r, echo = FALSE}
+(gapminder) %>%
+  select(country, year, pop) %>%
+  filter(year> 1990) %>%
+  pivot_wider(names_from = year,
+              values_from = pop) %>%
+  head() %>%
+  knitr::kable(format = "html")
+
+```
+
+
+---
+class: left, top
+# Tidy!
+
+```{r, echo = FALSE}
+(gapminder) %>%
+  select(country, year, pop) %>%
+  filter(year> 1990) %>%
+  head() %>% 
+  knitr::kable(format = "html")
+
+```
+
+---
 class: inverse, left, top
 # Read in data tidily
 
@@ -237,6 +231,8 @@ class: inverse, left, top
 <span style="font-size:1.5em;">
 Use your own dataset, or load the iris dataset using `data(iris)`
 
+
+<span style="font-size:1.5em;">
 Look at your data set- is it a tibble?
 
 ---
@@ -269,10 +265,6 @@ class: inverse, left, top
 
 You can also:
 
-- `pivot_longer` gather columns into rows
-
-- `pivot_wider` separate one column into several
-
 - `nest` and `unnest` your data set
 
 - `expand_grid` as an updated version of `expand.grid`
@@ -280,6 +272,12 @@ You can also:
 
 *New release of tidyr functions!
 https://www.tidyverse.org/articles/2019/09/tidyr-1-0-0/
+
+- `pivot_longer` gather columns into rows
+
+- `pivot_wider` separate one column into several
+
+(introduced in a bit)
 
 ---
 
@@ -372,12 +370,12 @@ group_by(gapminder, country, continent) %>%
 
 *Notice your tibble only has to be in the first function
 
----
-class: inverse, left, top
-# The Pipe: %>% 
+<!-- --- -->
+<!-- class: inverse, left, top -->
+<!-- # The Pipe: %>%  -->
 
 
-![](../imgs/pipes.png)
+<!-- ![](../imgs/pipes.png) -->
 
 
 ---
@@ -393,7 +391,7 @@ group_by(gapminder, continent, year) %>%
 ```
 
 ---
-
+class: inverse, left, top
 # Putting things together 
 ## `pivot_` functions
 
@@ -444,10 +442,10 @@ knitr::kable(head(longer_gapminder), format = "html")
 
 ```{r echo=TRUE}
 
-longer_gapminder %>% 
-  group_by(country, metric) %>% 
+longer_gapminder %>%
+  group_by(country, metric) %>%
   summarise(mean_value = mean(value),
-            sd_value = sd(value)) %>% 
+            sd_value = sd(value)) %>%
   head(n = 10)
 
 ```
@@ -479,8 +477,6 @@ knitr::kable(head(wider_gapminder), format = "html")
 plot(wider_gapminder$gdpPercap, wider_gapminder$lifeExp)
 
 ```
-
----
 
 ---
 class: inverse, left, top
