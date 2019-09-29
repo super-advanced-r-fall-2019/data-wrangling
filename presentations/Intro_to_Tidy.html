@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 ## FSH 507 Fall 2019
 ### Caitlin Allen Akselrud
 ### SAFS, UW
-### Sept. 30, 2019
+### Sept. 30, 2019
 
 ---
 
@@ -171,7 +171,7 @@ gapminder
 ##  8 Afghanistan Asia       1987    40.8 13867957      852.
 ##  9 Afghanistan Asia       1992    41.7 16317921      649.
 ## 10 Afghanistan Asia       1997    41.8 22227415      635.
-## # ... with 1,694 more rows
+## # … with 1,694 more rows
 ```
 
 ---
@@ -369,7 +369,7 @@ as_tibble(iris)
 ##  8          5           3.4          1.5         0.2 setosa 
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
-## # ... with 140 more rows
+## # … with 140 more rows
 ```
 
 ---
@@ -400,7 +400,7 @@ unite(gapminder,
 ##  8 Asia, Afghanistan  1987    40.8 13867957      852.
 ##  9 Asia, Afghanistan  1992    41.7 16317921      649.
 ## 10 Asia, Afghanistan  1997    41.8 22227415      635.
-## # ... with 1,694 more rows
+## # … with 1,694 more rows
 ```
 
 ---
@@ -470,7 +470,7 @@ filter(gapminder, lifeExp &gt;80)
 ##  8 Iceland          Europe     2007    81.8   301931    36181.
 ##  9 Israel           Asia       2007    80.7  6426679    25523.
 ## 10 Italy            Europe     2002    80.2 57926999    27968.
-## # ... with 11 more rows
+## # … with 11 more rows
 ```
 
 ---
@@ -497,7 +497,7 @@ select(gapminder, country, year, gdpPercap)
 ##  8 Afghanistan  1987      852.
 ##  9 Afghanistan  1992      649.
 ## 10 Afghanistan  1997      635.
-## # ... with 1,694 more rows
+## # … with 1,694 more rows
 ```
 
 ---
@@ -525,7 +525,7 @@ mutate(gapminder, l_g=lifeExp*gdpPercap)
 ##  8 Afghanistan Asia       1987    40.8 13867957      852. 34797.
 ##  9 Afghanistan Asia       1992    41.7 16317921      649. 27061.
 ## 10 Afghanistan Asia       1997    41.8 22227415      635. 26534.
-## # ... with 1,694 more rows
+## # … with 1,694 more rows
 ```
 
 ---
@@ -553,7 +553,7 @@ summarise(x, avg = mean(lifeExp))
 ##  8 Bahrain      65.6
 ##  9 Bangladesh   49.8
 ## 10 Belgium      73.6
-## # ... with 132 more rows
+## # … with 132 more rows
 ```
 
 ---
@@ -582,7 +582,7 @@ group_by(gapminder, country) %&gt;%
 ##  8 Bahrain      65.6
 ##  9 Bangladesh   49.8
 ## 10 Belgium      73.6
-## # ... with 132 more rows
+## # … with 132 more rows
 ```
 
 ---
@@ -612,7 +612,7 @@ group_by(gapminder, country, continent) %&gt;%
 ##  8 Central African Republic Africa           43.9
 ##  9 Chad                     Africa           46.8
 ## 10 Comoros                  Africa           52.4
-## # ... with 42 more rows
+## # … with 42 more rows
 ```
 
 *Notice your tibble only has to be in the first function
@@ -974,7 +974,7 @@ mutate(gapminder, "string" = str_c(country, continent, sep= ", "))
 ##  8 Afghanistan Asia       1987    40.8 13867957      852. Afghanistan, Asia
 ##  9 Afghanistan Asia       1992    41.7 16317921      649. Afghanistan, Asia
 ## 10 Afghanistan Asia       1997    41.8 22227415      635. Afghanistan, Asia
-## # ... with 1,694 more rows
+## # … with 1,694 more rows
 ```
 
 ---
@@ -1018,7 +1018,7 @@ mutate(gapminder, leap= leap_year(year))
 ##  8 Afghanistan Asia       1987    40.8 13867957      852. FALSE
 ##  9 Afghanistan Asia       1992    41.7 16317921      649. TRUE 
 ## 10 Afghanistan Asia       1997    41.8 22227415      635. FALSE
-## # ... with 1,694 more rows
+## # … with 1,694 more rows
 ```
 
 ---
@@ -1035,17 +1035,17 @@ mutate(gapminder, time=years(year))
 ## # A tibble: 1,704 x 7
 ##    country   continent  year lifeExp     pop gdpPercap time                
 ##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;Period&gt;            
-##  1 Afghanis~ Asia       1952    28.8  8.43e6      779. 1952y 0m 0d 0H 0M 0S
-##  2 Afghanis~ Asia       1957    30.3  9.24e6      821. 1957y 0m 0d 0H 0M 0S
-##  3 Afghanis~ Asia       1962    32.0  1.03e7      853. 1962y 0m 0d 0H 0M 0S
-##  4 Afghanis~ Asia       1967    34.0  1.15e7      836. 1967y 0m 0d 0H 0M 0S
-##  5 Afghanis~ Asia       1972    36.1  1.31e7      740. 1972y 0m 0d 0H 0M 0S
-##  6 Afghanis~ Asia       1977    38.4  1.49e7      786. 1977y 0m 0d 0H 0M 0S
-##  7 Afghanis~ Asia       1982    39.9  1.29e7      978. 1982y 0m 0d 0H 0M 0S
-##  8 Afghanis~ Asia       1987    40.8  1.39e7      852. 1987y 0m 0d 0H 0M 0S
-##  9 Afghanis~ Asia       1992    41.7  1.63e7      649. 1992y 0m 0d 0H 0M 0S
-## 10 Afghanis~ Asia       1997    41.8  2.22e7      635. 1997y 0m 0d 0H 0M 0S
-## # ... with 1,694 more rows
+##  1 Afghanis… Asia       1952    28.8  8.43e6      779. 1952y 0m 0d 0H 0M 0S
+##  2 Afghanis… Asia       1957    30.3  9.24e6      821. 1957y 0m 0d 0H 0M 0S
+##  3 Afghanis… Asia       1962    32.0  1.03e7      853. 1962y 0m 0d 0H 0M 0S
+##  4 Afghanis… Asia       1967    34.0  1.15e7      836. 1967y 0m 0d 0H 0M 0S
+##  5 Afghanis… Asia       1972    36.1  1.31e7      740. 1972y 0m 0d 0H 0M 0S
+##  6 Afghanis… Asia       1977    38.4  1.49e7      786. 1977y 0m 0d 0H 0M 0S
+##  7 Afghanis… Asia       1982    39.9  1.29e7      978. 1982y 0m 0d 0H 0M 0S
+##  8 Afghanis… Asia       1987    40.8  1.39e7      852. 1987y 0m 0d 0H 0M 0S
+##  9 Afghanis… Asia       1992    41.7  1.63e7      649. 1992y 0m 0d 0H 0M 0S
+## 10 Afghanis… Asia       1997    41.8  2.22e7      635. 1997y 0m 0d 0H 0M 0S
+## # … with 1,694 more rows
 ```
 
 ---
@@ -1061,18 +1061,18 @@ mutate(economics, year=year(date))
 ```
 ## # A tibble: 574 x 7
 ##    date         pce    pop psavert uempmed unemploy  year
-##    &lt;date&gt;     &lt;dbl&gt;  &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1 1967-07-01  507. 198712    12.5     4.5     2944  1967
-##  2 1967-08-01  510. 198911    12.5     4.7     2945  1967
-##  3 1967-09-01  516. 199113    11.7     4.6     2958  1967
-##  4 1967-10-01  513. 199311    12.5     4.9     3143  1967
-##  5 1967-11-01  518. 199498    12.5     4.7     3066  1967
-##  6 1967-12-01  526. 199657    12.1     4.8     3018  1967
-##  7 1968-01-01  532. 199808    11.7     5.1     2878  1968
-##  8 1968-02-01  534. 199920    12.2     4.5     3001  1968
-##  9 1968-03-01  545. 200056    11.6     4.1     2877  1968
-## 10 1968-04-01  545. 200208    12.2     4.6     2709  1968
-## # ... with 564 more rows
+##    &lt;date&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+##  1 1967-07-01  507. 198712    12.6     4.5     2944  1967
+##  2 1967-08-01  510. 198911    12.6     4.7     2945  1967
+##  3 1967-09-01  516. 199113    11.9     4.6     2958  1967
+##  4 1967-10-01  512. 199311    12.9     4.9     3143  1967
+##  5 1967-11-01  517. 199498    12.8     4.7     3066  1967
+##  6 1967-12-01  525. 199657    11.8     4.8     3018  1967
+##  7 1968-01-01  531. 199808    11.7     5.1     2878  1968
+##  8 1968-02-01  534. 199920    12.3     4.5     3001  1968
+##  9 1968-03-01  544. 200056    11.7     4.1     2877  1968
+## 10 1968-04-01  544  200208    12.3     4.6     2709  1968
+## # … with 564 more rows
 ```
 
 ---
@@ -1150,7 +1150,7 @@ augment(fit)
 ##  8    40.8      852. 1.39e7    54.4   0.304  -13.6 8.47e-4   10.4 4.81e-4
 ##  9    41.7      649. 1.63e7    54.3   0.306  -12.6 8.59e-4   10.4 4.20e-4
 ## 10    41.8      635. 2.22e7    54.4   0.305  -12.6 8.53e-4   10.4 4.14e-4
-## # ... with 1,694 more rows, and 1 more variable: .std.resid &lt;dbl&gt;
+## # … with 1,694 more rows, and 1 more variable: .std.resid &lt;dbl&gt;
 ```
 
 ---
@@ -1237,7 +1237,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {
