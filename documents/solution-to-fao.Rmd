@@ -1,0 +1,106 @@
+---
+title: "solution-to-fao"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Remember, it's on you to make sure that the working directory is in the right place! It should be set to the downloaded "data-wrangling" folder, or whatever you named it. If the first readxl:: command doens't work, it's most likely becuase your working directory isn't set correctly
+
+```{r}
+library(tidyverse)
+
+fishstat_sheets <-
+  readxl::excel_sheets(here::here("data", "fao_capture_1950-2016.xlsx"))
+
+fishstat_dat <-
+  readxl::read_xlsx(
+    here::here("data", "fao_capture_1950-2016.xlsx"),
+    sheet = fishstat_sheets[2],
+    skip = 1 #skip that first row
+  ) %>%
+  janitor::clean_names() %>% # clean up the names to something usable
+  tibble::rownames_to_column(var = "id") %>% # add an id column
+  dplyr::filter(
+    !stringr::str_detect(tolower(country_country), "total"),!stringr::str_detect(country_country, "\\d"),!stringr::str_detect(
+      tolower(production_source_detailed_production_source),
+      "aquaculture"
+    )
+  ) # get rid of totals rows, numbered rows, and aquaculture datta
+
+fishstat_dat <- fishstat_dat %>% # convert the individual year columns to a tidy format
+  tidyr::pivot_longer(
+    cols = starts_with("x"), # noticed that all year columns started with x
+    names_prefix = "x", # gets rid of that x in front of the years
+    names_ptypes = list(year = integer()), # convert each column years to an integer after stripping off the x
+    names_to = "year",# the variable the former column names will go into
+    values_to = "capture" # the variable the capture values will go ti
+  ) %>%
+  mutate(
+    capture_notes = str_replace_all(capture, "\\d", ''), #pull out the text
+    capture_numbers = str_replace_all(capture, "\\D", "") %>% as.numeric(), #pull out the numbers and convert the numerics. Note the use of a nested pipe!
+    clean_capture = as.numeric(capture) # SERIOUSLY awful step to accounnt for the 10 stocks entered as 7e-7....
+  ) %>%
+  mutate(capture = ifelse(is.na(clean_capture), capture_numbers, clean_capture)) # kep any stock that was a clean number (which catches the 7e-7, and add in anything else that was like 500 F
+
+# and plot
+fishstat_dat %>%
+  group_by(year, production_area_fao_major_fishing_area_10, unit_unit) %>%
+  summarise(total_captures = sum(capture, na.rm = TRUE)) %>%
+  ggplot(aes(year, total_captures, color = unit_unit)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::comma) + 
+  facet_wrap(~production_area_fao_major_fishing_area_10) + 
+  theme_minimal() + 
+  theme(strip.text = element_text(size = 6))
+
+```
+
+Same thing but with the old gather function
+
+```{r}
+
+fishstat_dat <-
+  readxl::read_xlsx(
+    here::here("data", "fao_capture_1950-2016.xlsx"),
+    sheet = fishstat_sheets[2],
+    skip = 1
+  ) %>%
+  janitor::clean_names() %>%
+  rownames_to_column(var = "id") %>% 
+    dplyr::filter(
+    !stringr::str_detect(tolower(country_country), "total"),!stringr::str_detect(country_country, "\\d"),!stringr::str_detect(
+      tolower(production_source_detailed_production_source),
+      "aquaculture"
+    )
+  ) # get rid of totals rows, numbered rows, and aquaculture datta
+
+
+fishstat_dat <- fishstat_dat %>%
+  gather(year, capture, starts_with("x")) %>%
+  mutate(year = as.numeric(str_remove_all(year, "\\D"))) %>%
+  mutate(
+    capture_notes = str_replace_all(capture, "\\d", ''), #pull out the text
+    capture_numbers = str_replace_all(capture, "\\D", "") %>% as.numeric(), #pull out the numbers and convert the numerics. Note the use of a nested pipe!
+    clean_capture = as.numeric(capture) # SERIOUSLY awful step to accounnt for the 10 stocks entered as 7e-7....
+  ) %>% 
+    mutate(capture = ifelse(is.na(clean_capture), capture_numbers, clean_capture)) # kep any stock that was a clean number (which catches the 7e-7, and add in anything else that was like 500 F
+
+
+# and plot
+fishstat_dat %>%
+  group_by(year, production_area_fao_major_fishing_area_10, unit_unit) %>%
+  summarise(total_captures = sum(capture, na.rm = TRUE)) %>%
+  ggplot(aes(year, total_captures, color = unit_unit)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::comma) + 
+  facet_wrap(~production_area_fao_major_fishing_area_10) + 
+  theme_minimal() + 
+  theme(strip.text = element_text(size = 6))
+
+
+```
+
+
