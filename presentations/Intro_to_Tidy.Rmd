@@ -370,12 +370,12 @@ group_by(gapminder, country, continent) %>%
 
 *Notice your tibble only has to be in the first function
 
-<!-- --- -->
-<!-- class: inverse, left, top -->
-<!-- # The Pipe: %>%  -->
+---
+class: inverse, left, top
+# The Pipe: %>%
 
 
-<!-- ![](../imgs/pipes.png) -->
+![](`r here::here("imgs","pipes.png")`)
 
 
 ---
